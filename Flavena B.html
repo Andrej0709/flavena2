@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#F3F5FA;color:#0B1540;font-family:'Onest',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#1436A2;text-underline-offset:3px}
+a:hover{color:#0B1540}
+::selection{background:#67B50A;color:#0B1540}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none !important}}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+button,a{-webkit-tap-highlight-color:rgba(11,21,64,.08);touch-action:manipulation}
+main,footer{overflow-x:clip}
+.hdr-burger{display:none}
+@media (min-width:761px){.mnav{display:none !important}}
+@media (max-width:760px){
+  .hdr{padding-top:8px !important;padding-bottom:8px !important;flex-wrap:nowrap !important}
+  .hdr-logo{height:38px !important}
+  .hdr-nav,.hdr-cta,.hdr-tel{display:none !important}
+  .hdr-burger{display:inline-flex !important}
+  .span-reset{grid-column:auto !important}
+  .btn-row>*{flex:1 1 auto;justify-content:center}
+  .hero-badge{font-size:12px !important;line-height:1.3 !important}
+  .b-hero-img{max-width:320px !important}
+  .b-hero-stat{padding:10px 14px !important}
+  .b-hero-stat strong{font-size:22px !important}
+  .b-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:10px !important}
+  .b-card{padding:6px 6px 14px !important;gap:10px !important;border-radius:20px !important}
+  .b-card-body{padding:0 6px !important}
+  .b-card-name{font-size:15px !important}
+  .b-card-arrow{display:none !important}
+  .b-filter{width:100%;box-sizing:border-box}
+  .b-filter>button{flex:1 1 auto;justify-content:center;padding:0 10px !important}
+  .b-list{grid-template-columns:88px minmax(0,1fr) !important;gap:14px !important}
+  .b-list-img{width:88px !important;height:88px !important;border-radius:14px !important}
+  .b-list-name{font-size:17px !important}
+  .b-list-short{display:none !important}
+  .b-spot-img{min-height:220px !important}
+  .b-about-img{min-height:240px !important}
+  .b-cat-img{max-width:320px !important}
+  .client-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  .b-map{min-height:280px !important}
+  .b-contact-hero{padding-bottom:120px !important}
+  .b-cta-deco{opacity:.35}
+}
+</style>
+</helmet>
+
+<header style="position:sticky;top:0;z-index:50;background:#FFFFFF;box-shadow:0 1px 0 rgba(11,21,64,.08)">
+  <div class="hdr" style="max-width:1360px;margin:0 auto;padding:10px clamp(20px,4vw,48px);display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap">
+    <button onClick="{{ goHome }}" aria-label="Flavena, naslovna" style="background:none;border:0;padding:4px;cursor:pointer;display:flex;border-radius:8px"><img class="hdr-logo" src="assets/flavena-logo.png" alt="Flavena Beograd" style="height:48px;width:auto;display:block"></button>
+    <button class="hdr-burger" onClick="{{ toggleMenu }}" aria-expanded="{{ menuExpanded }}" aria-controls="mnav-b" style="margin-left:auto;align-items:center;gap:10px;min-height:46px;padding:0 16px;border:0;border-radius:12px;background:{{ burgerBg }};color:{{ burgerFg }};font:700 15px/1 'Onest',sans-serif;cursor:pointer">
+      <span aria-hidden="true" style="position:relative;display:block;width:18px;height:12px">
+        <span style="position:absolute;left:0;right:0;top:0;height:2px;border-radius:2px;background:currentColor;transition:transform .25s;transform:{{ bar1 }}"></span>
+        <span style="position:absolute;left:0;right:0;top:5px;height:2px;border-radius:2px;background:currentColor;transition:opacity .2s;opacity:{{ bar2 }}"></span>
+        <span style="position:absolute;left:0;right:0;top:10px;height:2px;border-radius:2px;background:currentColor;transition:transform .25s;transform:{{ bar3 }}"></span>
+      </span>
+      {{ menuLabel }}
+    </button>
+    <nav class="hdr-nav" aria-label="Glavna navigacija" style="display:flex;gap:4px;flex-wrap:wrap;margin-left:auto">
+      <button onClick="{{ goProducts }}" style="background:none;border:0;font:600 15px/1 'Onest',sans-serif;color:#0B1540;padding:14px 16px;border-radius:12px;cursor:pointer;transition:background .2s" style-hover="background:#E7ECF8">Proizvodi</button>
+      <button onClick="{{ goAbout }}" style="background:none;border:0;font:600 15px/1 'Onest',sans-serif;color:#0B1540;padding:14px 16px;border-radius:12px;cursor:pointer;transition:background .2s" style-hover="background:#E7ECF8">O nama</button>
+      <button onClick="{{ goContact }}" style="background:none;border:0;font:600 15px/1 'Onest',sans-serif;color:#0B1540;padding:14px 16px;border-radius:12px;cursor:pointer;transition:background .2s" style-hover="background:#E7ECF8">Kontakt</button>
+    </nav>
+    <a class="hdr-tel" href="tel:+38163431192" style="font:600 15px/1 'Onest',sans-serif;color:#1436A2;text-decoration:none;padding:14px 8px">063 431-192</a>
+    <button class="hdr-cta" onClick="{{ goSample }}" style="min-height:46px;padding:0 20px;border:0;border-radius:12px;background:#1436A2;color:#FFFFFF;font:700 15px/1 'Onest',sans-serif;cursor:pointer;transition:background .2s" style-hover="background:#0B1540">Zatražite uzorak</button>
+  </div>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <nav id="mnav-b" class="mnav" aria-label="Mobilna navigacija" style="border-top:1px solid rgba(11,21,64,.08);padding:8px 20px 20px;display:flex;flex-direction:column;gap:4px;max-height:calc(100dvh - 64px);overflow-y:auto">
+      <button onClick="{{ goProducts }}" style="display:flex;justify-content:space-between;align-items:center;min-height:56px;background:#F3F5FA;border:0;border-radius:14px;padding:0 16px;font:700 19px/1 'Onest',sans-serif;color:#0B1540;text-align:left;cursor:pointer">Proizvodi <span aria-hidden="true" style="color:#1436A2">→</span></button>
+      <button onClick="{{ goAbout }}" style="display:flex;justify-content:space-between;align-items:center;min-height:56px;background:#F3F5FA;border:0;border-radius:14px;padding:0 16px;font:700 19px/1 'Onest',sans-serif;color:#0B1540;text-align:left;cursor:pointer">O nama <span aria-hidden="true" style="color:#1436A2">→</span></button>
+      <button onClick="{{ goContact }}" style="display:flex;justify-content:space-between;align-items:center;min-height:56px;background:#F3F5FA;border:0;border-radius:14px;padding:0 16px;font:700 19px/1 'Onest',sans-serif;color:#0B1540;text-align:left;cursor:pointer">Kontakt <span aria-hidden="true" style="color:#1436A2">→</span></button>
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <button onClick="{{ goSample }}" style="flex:1 1 auto;min-height:52px;padding:0 18px;border:0;border-radius:14px;background:#1436A2;color:#FFFFFF;font:700 16px/1 'Onest',sans-serif;cursor:pointer">Zatražite uzorak</button>
+        <a href="tel:+38163431192" aria-label="Pozovite 063 431-192" style="flex:none;display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 18px;border-radius:14px;background:#67B50A;color:#0B1540;font:700 16px/1 'Onest',sans-serif;text-decoration:none">Pozovite</a>
+      </div>
+    </nav>
+  </sc-if>
+</header>
+
+<main>
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <section data-screen-label="Naslovna — hero" style="background:#1436A2;color:#FFFFFF;border-radius:0 0 clamp(28px,4vw,56px) clamp(28px,4vw,56px);overflow:hidden">
+    <div style="max-width:1360px;margin:0 auto;padding:clamp(40px,6vw,88px) clamp(20px,4vw,48px) clamp(48px,6vw,88px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:48px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:28px">
+        <span class="hero-badge" style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 14px 8px 8px;font:600 13px/1 'Onest',sans-serif"><span style="width:22px;height:22px;border-radius:50%;background:#67B50A"></span>Zvanični distributer Akras · Austrija</span>
+        <h1 style="font:800 clamp(44px,6.6vw,104px)/.98 'Onest',sans-serif;letter-spacing:-.04em;margin:0;text-wrap:balance">Svet prepun neodoljivih <span style="color:#8FD63A">ukusa i aroma.</span></h1>
+        <p style="font:400 clamp(17px,1.4vw,20px)/1.55 'Onest',sans-serif;color:#DCE3F7;margin:0;max-width:50ch">Uvoz i distribucija aroma za prehrambenu industriju Srbije i regiona. Sa lagera ili po vašoj specifikaciji, uz stručan savet.</p>
+        <div class="btn-row" style="display:flex;gap:12px;flex-wrap:wrap">
+          <button onClick="{{ goSample }}" style="min-height:54px;padding:0 26px;border:0;border-radius:14px;background:#67B50A;color:#0B1540;font:700 16px/1 'Onest',sans-serif;cursor:pointer;transition:background .2s" style-hover="background:#7FCB22">Zatražite uzorak →</button>
+          <button onClick="{{ goMeeting }}" style="min-height:54px;padding:0 26px;border:1.5px solid rgba(255,255,255,.6);border-radius:14px;background:transparent;color:#FFFFFF;font:700 16px/1 'Onest',sans-serif;cursor:pointer;transition:background .2s" style-hover="background:rgba(255,255,255,.12)">Sastanak sa tehnologom</button>
+        </div>
+      </div>
+      <div class="b-hero-img" style="position:relative;width:100%;max-width:560px;justify-self:center;aspect-ratio:1/1">
+        <div style="position:absolute;right:-6%;top:-6%;width:46%;aspect-ratio:1/1;border-radius:50%;background:#67B50A"></div>
+        <div style="position:absolute;inset:6%"><image-slot id="b-hero" src="https://flavena.co.rs/wp-content/uploads/2022/04/01.jpg" shape="circle" placeholder="Hero fotografija"></image-slot></div>
+        <div class="b-hero-stat" style="position:absolute;left:0;bottom:6%;background:#FFFFFF;color:#0B1540;border-radius:18px;padding:14px 18px;display:flex;flex-direction:column;gap:2px;box-shadow:0 12px 32px rgba(11,21,64,.25);pointer-events:none">
+          <strong style="font:800 28px/1 'Onest',sans-serif;letter-spacing:-.02em;color:#1436A2">80+ god.</strong>
+          <span style="font:500 13px/1.3 'Onest',sans-serif;color:#4A5372">iskustva proizvođača u razvoju ukusa</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Naslovna — industrije" style="max-width:1360px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(20px,4vw,48px) 0">
+    <div style="display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:32px">
+      <div style="max-width:640px">
+        <p style="font:700 13px/1 'Onest',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#3D7000;margin:0 0 14px">Asortiman</p>
+        <h2 style="font:800 clamp(32px,4vw,56px)/1.02 'Onest',sans-serif;letter-spacing:-.035em;margin:0;text-wrap:balance">Pronađite ukus za svoju industriju.</h2>
+      </div>
+      <div class="b-filter" role="tablist" aria-label="Filter po industriji" style="display:flex;gap:6px;flex-wrap:wrap;background:#FFFFFF;border-radius:16px;padding:6px">
+        <sc-for list="{{ filters }}" as="t" hint-placeholder-count="4">
+          <button role="tab" onClick="{{ t.onClick }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:12px;background:{{ t.bg }};color:{{ t.fg }};font:600 15px/1 'Onest',sans-serif;cursor:pointer;transition:background .2s,color .2s">{{ t.label }} <span style="font:600 12px/1 'Onest',sans-serif;opacity:.65">{{ t.count }}</span></button>
+        </sc-for>
+      </div>
+    </div>
+    <div class="b-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:16px">
+      <sc-for list="{{ list }}" as="c" hint-placeholder-count="8">
+        <button class="b-card" data-reveal="" onClick="{{ c.onOpen }}" style="background:#FFFFFF;border:0;border-radius:24px;padding:10px 10px 18px;text-align:left;cursor:pointer;color:#0B1540;display:flex;flex-direction:column;gap:14px;box-shadow:0 1px 2px rgba(11,21,64,.06);transition:box-shadow .25s,transform .25s" style-hover="box-shadow:0 14px 36px rgba(20,54,162,.16);transform:translateY(-3px)">
+          <span style="position:relative;display:block;aspect-ratio:1/1;width:100%;border-radius:18px;overflow:hidden;background:#E7ECF8">
+            <image-slot id="b-grid-{{ c.slug }}" src="{{ c.img }}" shape="rounded" radius="18" placeholder="Fotografija kategorije"></image-slot>
+          </span>
+          <span class="b-card-body" style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:0 8px">
+            <span style="display:flex;flex-direction:column;gap:6px">
+              <span style="font:700 12px/1 'Onest',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#3D7000">{{ c.groupLabel }}</span>
+              <span class="b-card-name" style="font:700 18px/1.2 'Onest',sans-serif;letter-spacing:-.01em">{{ c.name }}</span>
+            </span>
+            <span class="b-card-arrow" aria-hidden="true" style="flex:none;width:36px;height:36px;border-radius:50%;background:#E7ECF8;color:#1436A2;display:grid;place-items:center;font:700 16px/1 'Onest',sans-serif">→</span>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Naslovna — kako radimo" style="max-width:1360px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,48px) 0">
+    <div style="background:#FFFFFF;border-radius:clamp(28px,4vw,48px);padding:clamp(28px,5vw,64px)">
+      <p style="font:700 13px/1 'Onest',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#3D7000;margin:0 0 14px">Kako radimo</p>
+      <h2 style="font:800 clamp(32px,4vw,56px)/1.02 'Onest',sans-serif;letter-spacing:-.035em;margin:0 0 48px;max-width:18ch;text-wrap:balance">Brz i efikasan put do sirovine.</h2>
+      <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:32px 24px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+          <li data-reveal="" style="display:flex;flex-direction:column;gap:14px;padding-top:24px;border-top:3px solid #67B50A">
+            <span style="width:48px;height:48px;border-radius:50%;background:#1436A2;color:#FFFFFF;display:grid;place-items:center;font:800 17px/1 'Onest',sans-serif">{{ s.num }}</span>
+            <h3 style="font:700 22px/1.2 'Onest',sans-serif;margin:0">{{ s.title }}</h3>
+            <p style="font:400 15px/1.55 'Onest',sans-serif;color:#4A5372;margin:0">{{ s.text }}</p>
+          </li>
+        </sc-for>
+      </ol>
+    </div>
+  </section>
+
+  <section data-screen-label="Naslovna — izdvajamo" style="max-width:1360px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,48px) 0;display:flex;flex-direction:column;gap:20px">
+    <sc-for list="{{ spotlight }}" as="c" hint-placeholder-count="2">
+      <article data-reveal="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));background:#FFFFFF;border-radius:clamp(28px,4vw,48px);overflow:hidden">
+        <div class="b-spot-img" style="position:relative;min-height:340px"><image-slot id="b-spot-{{ c.slug }}" src="{{ c.img }}" shape="rect" placeholder="Fotografija sirovine"></image-slot></div>
+        <div style="padding:clamp(28px,4vw,56px);display:flex;flex-direction:column;gap:18px;justify-content:center">
+          <span style="font:700 13px/1 'Onest',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#3D7000">{{ c.kicker }}</span>
+          <h3 style="font:800 clamp(32px,3.6vw,52px)/1 'Onest',sans-serif;letter-spacing:-.035em;margin:0">{{ c.name }}</h3>
+          <p style="font:400 17px/1.6 'Onest',sans-serif;color:#4A5372;margin:0;max-width:52ch">{{ c.intro }}</p>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ c.chips }}" as="x" hint-placeholder-count="4"><li style="font:600 14px/1 'Onest',sans-serif;padding:10px 14px;border-radius:10px;background:#E7ECF8;color:#1436A2">{{ x }}</li></sc-for>
+          </ul>
+          <button onClick="{{ c.onOpen }}" style="align-self:flex-start;min-height:50px;padding:0 22px;border:0;border-radius:14px;background:#1436A2;color:#FFFFFF;font:700 15px/1 'Onest',sans-serif;cursor:pointer;transition:background .2s" style-hover="background:#0B1540">Detalji kategorije →</button>
+        </div>
+      </article>
+    </sc-for>
+  </section>
+
+  <section data-screen-label="Naslovna — poverenje" style="max-width:1360px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,48px) 0">
+    <div style="text-align:center;max-width:720px;margin:0 auto 36px">
+      <p style="font:700 13px/1 'Onest',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#3D7000;margin:0 0 14px">Poverenje</p>
+      <h2 style="font:800 clamp(32px,4vw,56px)/1.02 'Onest',sans-serif;letter-spacing:-.035em;margin:0;text-wrap:balance">Biraju nas poznata imena prehrambene industrije.</h2>
+    </div>
+    <div class="client-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:12px">
+      <sc-for list="{{ clients }}" as="k" hint-placeholder-count="6">
+        <div data-reveal="" style="background:#FFFFFF;border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:10px;align-items:center">
+          <div style="position:relative;aspect-ratio:3/2;width:100%"><image-slot id="b-client-{{ k.id }}" shape="rounded" radius="10" fit="contain" placeholder="Logo klijenta"></image-slot></div>
+          <span style="font:600 13px/1.3 'Onest',sans-serif;color:#4A5372">{{ k.name }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:20px;background:#E7ECF8;border-radius:24px;padding:20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center">
+      <span style="font:700 13px/1.3 'Onest',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#1436A2;padding:0 10px">Sertifikati proizvođača</span>
+      <sc-for list="{{ certs }}" as="z" hint-placeholder-count="7">
+        <div title="{{ z.d }}" style="display:flex;align-items:center;gap:10px;background:#FFFFFF;border-radius:14px;padding:6px 14px 6px 6px">
+          <img src="{{ z.img }}" alt="{{ z.n }}" loading="lazy" style="width:38px;height:38px;object-fit:contain;display:block">
+          <strong style="font:700 13px/1.2 'Onest',sans-serif">{{ z.n }}</strong>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  <section data-screen-label="Naslovna — lokacija" style="max-width:1360px;margin:0 auto;padding:clamp(72px,9vw,128px) clamp(20px,4vw,48px) 0">
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;background:#FFFFFF;border-radius:clamp(28px,4vw,48px);overflow:hidden;box-shadow:0 1px 2px rgba(11,21,64,.06)">
+      <div style="flex:1 1 360px;box-sizing:border-box;background:#1436A2;color:#FFFFFF;padding:clamp(28px,4vw,56px);display:flex;flex-direction:column;gap:22px;position:relative;overflow:hidden">
+        <div aria-hidden="true" style="position:absolute;right:-70px;bottom:-70px;width:220px;height:220px;border-radius:50%;background:#67B50A;opacity:.95"></div>
+        <p style="font:700 13px/1 'Onest',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#B9E57F;margin:0;position:relative">Lokacija</p>
+        <h2 style="font:800 clamp(32px,3.6vw,52px)/1.02 'Onest',sans-serif;letter-spacing:-.035em;margin:0;text-wrap:balance;position:relative">Posetite nas na Novom Beogradu.</h2>
+        <div style="display:flex;flex-direction:column;gap:14px;position:relative">
+          <div style="display:flex;gap:14px;align-items:flex-start">
+            <span aria-hidden="true" style="flex:none;width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.12);display:grid;place-items:center"><span style="width:12px;height:12px;border-radius:50%;background:#67B50A"></span></span>
+            <span style="font:500 17px/1.45 'Onest',sans-serif">Jurija Gagarina 231, lokal 311<br>11070 Novi Beograd</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;padding-left:54px;font:600 16px/1.4 'Onest',sans-serif">
+            <a href="tel:+38163431192" style="color:#FFFFFF">063 431-192</a>
+            <a href="mailto:flavena.doo@gmail.com" style="color:#FFFFFF">flavena.doo@gmail.com</a>
+          </div>
+        </div>
+        <div class="btn-row" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;position:relative">
+          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Jurija+Gagarina+231+Novi+Beograd" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;min-height:50px;padding:0 22px;border-radius:14px;background:#FFFFFF;color:#1436A2;font:700 15px/1 'Onest',sans-serif;text-decoration:none;box-sizing:border-box;transition:background .2s" style-hover="background:#E7ECF8;color:#1436A2">Putanja do nas →</a>
+          <button onClick="{{ goMeeting }}" style="min-height:50px;padding:0 22px;border:1.5px solid rgba(255,255,255,.6);border-radius:14px;background:transparent;color:#FFFFFF;font:700 15px/1 'Onest',sans-serif;cursor:pointer" style-hover="background:rgba(255,255,255,.12)">Zakažite sastanak</button>
+        </div>
+      </div>
+      <div class="b-map" style="position:relative;min-height:clamp(360px,40vw,520px);flex:2 1 480px;background:#E7ECF8">
+        <iframe title="Mapa: Jurija Gagarina 231, Novi Beograd" src="https://maps.google.com/maps?q=Jurija%20Gagarina%20231%2C%20Novi%20Beograd&amp;t=m&amp;z=15&amp;output=embed" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:block"></iframe>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isProducts }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Proizvodi" style="background:#1436A2;color:#FFFFFF;border-radius:0 0 clamp(28px,4vw,56px) clamp(28px,4vw,56px)">
+    <div style="max-width:1360px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(20px,4vw,48px)">
+      <nav aria-label="Putanja" style="display:flex;gap:8px;align-items:center;font:600 14px/1 'Onest',sans-serif;color:#DCE3F7"><button onClick="{{ goHome }}" style="background:none;border:0;padding:8px 0;font:inherit;color:inherit;cursor:pointer">Naslovna</button><span aria-hidden="true">›</span><span style="color:#FFFFFF">Proizvodi</span></nav>
+      <h1 style="font:800 clamp(44px,6.6vw,96px)/.98 'Onest',sans-serif;letter-spacing:-.04em;margin:16px 0 20px">Asortiman</h1>
+      <p style="font:400 18px/1.55 'Onest',sans-serif;color:#DCE3F7;margin:0 0 28px;max-width:56ch">Celokupna paleta proizvođača Akras: arome, emulzije, jedinjenja i prirodne sirovine za 13 oblasti primene.</p>
+      <div class="b-filter" role="tablist" aria-label="Filter po industriji" style="display:inline-flex;gap:6px;flex-wrap:wrap;background:rgba(255,255,255,.1);border-radius:16px;padding:6px">
+        <sc-for list="{{ filtersDark }}" as="t" hint-placeholder-count="4">
+          <button role="tab" onClick="{{ t.onClick }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:12px;background:{{ t.bg }};color:{{ t.fg }};font:600 15px/1 'Onest',sans-serif;cursor:pointer">{{ t.label }} <span style="font:600 12px/1 'Onest',sans-serif;opacity:.65">{{ t.count }}</span></button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  <section style="max-width:1360px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(20px,4vw,48px) 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));gap:16px">
+    <sc-for list="{{ list }}" as="c" hint-placeholder-count="6">
+      <button class="b-list" data-reveal="" onClick="{{ c.onOpen }}" style="display:grid;grid-template-columns:132px minmax(0,1fr);gap:18px;align-items:center;background:#FFFFFF;border:0;border-radius:24px;padding:10px;text-align:left;cursor:pointer;color:#0B1540;transition:box-shadow .25s" style-hover="box-shadow:0 14px 36px rgba(20,54,162,.16)">
+        <span class="b-list-img" style="position:relative;display:block;width:132px;height:132px;border-radius:18px;overflow:hidden"><image-slot id="b-list-{{ c.slug }}" src="{{ c.img }}" shape="rounded" radius="18" placeholder="Foto"></image-slot></span>
+        <span style="display:flex;flex-direction:column;gap:6px;padding-right:10px">
+          <span style="font:700 12px/1 'Onest',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#3D7000">{{ c.num }} · {{ c.groupLabel }}</span>
+          <span class="b-list-name" style="font:700 19px/1.2 'Onest',sans-serif">{{ c.name }}</span>
+          <span class="b-list-short" style="font:400 14px/1.45 'Onest',sans-serif;color:#4A5372">{{ c.short }}</span>
+        </span>
+      </button>
+    </sc-for>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isCat }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Kategorija" style="background:#1436A2;color:#FFFFFF;border-radius:0 0 clamp(28px,4vw,56px) clamp(28px,4vw,56px);overflow:hidden">
+    <div style="max-width:1360px;margin:0 auto;padding:clamp(32px,5vw,64px) clamp(20px,4vw,48px) clamp(48px,6vw,80px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:40px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <nav aria-label="Putanja" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;font:600 14px/1 'Onest',sans-serif;color:#DCE3F7"><button onClick="{{ goHome }}" style="background:none;border:0;padding:8px 0;font:inherit;color:inherit;cursor:pointer">Naslovna</button><span aria-hidden="true">›</span><button onClick="{{ goProducts }}" style="background:none;border:0;padding:8px 0;font:inherit;color:inherit;cursor:pointer">Proizvodi</button><span aria-hidden="true">›</span><span style="color:#FFFFFF">{{ cur.name }}</span></nav>
+        <span style="align-self:flex-start;background:#67B50A;color:#0B1540;border-radius:10px;padding:9px 12px;font:700 13px/1 'Onest',sans-serif;letter-spacing:.06em;text-transform:uppercase">{{ cur.kicker }}</span>
+        <h1 style="font:800 clamp(40px,5.6vw,84px)/1 'Onest',sans-serif;letter-spacing:-.04em;margin:0;text-wrap:balance">{{ cur.name }}</h1>
+        <p style="font:400 18px/1.6 'Onest',sans-serif;color:#DCE3F7;margin:0;max-width:54ch">{{ cur.intro }}</p>
+        <div class="btn-row" style="display:flex;gap:12px;flex-wrap:wrap">
+          <button onClick="{{ goSampleCat }}" style="min-height:54px;padding:0 26px;border:0;border-radius:14px;background:#67B50A;color:#0B1540;font:700 16px/1 'Onest',sans-serif;cursor:pointer;transition:background .2s" style-hover="background:#7FCB22">Zatražite uzorak →</button>
+          <button onClick="{{ goMeeting }}" style="min-height:54px;padding:0 26px;border:1.5px solid rgba(255,255,255,.6);border-radius:14px;background:transparent;color:#FFFFFF;font:700 16px/1 'Onest',sans-serif;cursor:pointer" style-hover="background:rgba(255,255,255,.12)">Sastanak sa tehnologom</button>
+        </div>
+      </div>
+      <div class="b-cat-img" style="position:relative;width:100%;max-width:520px;justify-self:center;aspect-ratio:1/1">
+        <div style="position:absolute;left:-5%;bottom:-5%;width:40%;aspect-ratio:1/1;border-radius:50%;background:#67B50A"></div>
+        <div style="position:absolute;inset:5%"><image-slot id="b-cat-{{ cur.slug }}" src="{{ cur.img }}" shape="circle" placeholder="Fotografija kategorije"></image-slot></div>
+      </div>
+    </div>
+  </section>
+  <section style="max-width:1360px;margin:0 auto;padding:clamp(48px,6vw,88px) clamp(20px,4vw,48px) 0">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+      <sc-for list="{{ cur.sections }}" as="x" hint-placeholder-count="3">
+        <article data-reveal="" style="background:#FFFFFF;border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:12px">
+          <span style="width:44px;height:44px;border-radius:50%;background:#E7ECF8;color:#1436A2;display:grid;place-items:center;font:800 15px/1 'Onest',sans-serif">{{ x.num }}</span>
+          <h2 style="font:700 23px/1.2 'Onest',sans-serif;letter-spacing:-.01em;margin:0">{{ x.h }}</h2>
+          <p style="font:400 16px/1.6 'Onest',sans-serif;color:#4A5372;margin:0">{{ x.t }}</p>
+        </article>
+      </sc-for>
+    </div>
+    <sc-if value="{{ cur.hasList }}" hint-placeholder-val="{{ true }}">
+      <div data-reveal="" style="margin-top:16px;background:#0B1540;color:#FFFFFF;border-radius:24px;padding:clamp(24px,4vw,44px);display:flex;flex-direction:column;gap:20px">
+        <h2 style="font:800 clamp(26px,3vw,38px)/1.05 'Onest',sans-serif;letter-spacing:-.03em;margin:0">{{ cur.listTitle }}</h2>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px">
+          <sc-for list="{{ cur.list }}" as="x" hint-placeholder-count="5"><li style="display:flex;align-items:center;gap:10px;font:600 15px/1 'Onest',sans-serif;padding:12px 16px 12px 12px;border-radius:12px;background:rgba(255,255,255,.08)"><span style="width:10px;height:10px;border-radius:50%;background:#67B50A"></span>{{ x }}</li></sc-for>
+        </ul>
+      </div>
+    </sc-if>
+    <h2 style="font:800 clamp(26px,3vw,38px)/1.05 'Onest',sans-serif;letter-spacing:-.03em;margin:clamp(56px,7vw,96px) 0 20px">Srodne kategorije</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:16px">
+      <sc-for list="{{ related }}" as="c" hint-placeholder-count="3">
+        <button onClick="{{ c.onOpen }}" style="background:#FFFFFF;border:0;border-radius:24px;padding:10px 10px 18px;text-align:left;cursor:pointer;color:#0B1540;display:flex;flex-direction:column;gap:12px;transition:box-shadow .25s" style-hover="box-shadow:0 14px 36px rgba(20,54,162,.16)">
+          <span style="position:relative;display:block;aspect-ratio:16/10;border-radius:18px;overflow:hidden"><image-slot id="b-rel-{{ c.slug }}" src="{{ c.img }}" shape="rounded" radius="18" placeholder="Foto"></image-slot></span>
+          <span style="font:700 18px/1.2 'Onest',sans-serif;padding:0 8px">{{ c.name }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="O nama" style="background:#1436A2;color:#FFFFFF;border-radius:0 0 clamp(28px,4vw,56px) clamp(28px,4vw,56px)">
+    <div style="max-width:1360px;margin:0 auto;padding:clamp(40px,6vw,88px) clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:32px 64px;align-items:end">
+      <div>
+        <p style="font:700 13px/1 'Onest',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#B9E57F;margin:0 0 16px">O nama</p>
+        <h1 style="font:800 clamp(42px,6vw,92px)/.98 'Onest',sans-serif;letter-spacing:-.04em;margin:0;text-wrap:balance">Arome za industriju Srbije i regiona.</h1>
+      </div>
+      <p style="font:400 18px/1.6 'Onest',sans-serif;color:#DCE3F7;margin:0">Osnovna delatnost Flavene je uvoz i distribucija aroma za prehrambenu industriju. Zvanični smo distributer svetski priznatog austrijskog proizvođača Akras i nudimo njegovu celokupnu paletu proizvoda.</p>
+    </div>
+  </section>
+  <section style="max-width:1360px;margin:0 auto;padding:clamp(48px,6vw,88px) clamp(20px,4vw,48px) 0;display:flex;flex-direction:column;gap:16px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px">
+      <div class="b-about-img" style="position:relative;min-height:360px"><image-slot id="b-about" shape="rounded" radius="32" placeholder="Fotografija: tim / magacin"></image-slot></div>
+      <div style="background:#FFFFFF;border-radius:32px;padding:clamp(28px,4vw,48px);display:flex;flex-direction:column;gap:18px;font:400 17px/1.6 'Onest',sans-serif;color:#4A5372">
+        <h2 style="font:800 clamp(28px,3vw,42px)/1.05 'Onest',sans-serif;letter-spacing:-.03em;margin:0;color:#0B1540">Sirovine visokog kvaliteta, brzo i efikasno.</h2>
+        <p style="margin:0">Pored proizvoda sa lager liste, na specifične zahteve klijenata pružamo kompletan konsalting, nabavku i uvoz aroma, njihovo skladištenje i transport robe do magacina kupca.</p>
+        <p style="margin:0">Zadovoljstvo klijenata je naš prioritet, o čemu svedoči i portfolio poznatih imena prehrambene industrije.</p>
+      </div>
+    </div>
+    <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:16px">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+        <li data-reveal="" style="background:#FFFFFF;border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:12px">
+          <span style="width:44px;height:44px;border-radius:50%;background:#67B50A;color:#0B1540;display:grid;place-items:center;font:800 15px/1 'Onest',sans-serif">{{ s.num }}</span>
+          <h3 style="font:700 21px/1.2 'Onest',sans-serif;margin:0">{{ s.title }}</h3>
+          <p style="font:400 15px/1.55 'Onest',sans-serif;color:#4A5372;margin:0">{{ s.text }}</p>
+        </li>
+      </sc-for>
+    </ol>
+    <div class="client-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:12px;margin-top:40px">
+      <sc-for list="{{ clients }}" as="k" hint-placeholder-count="6">
+        <div style="background:#FFFFFF;border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:10px;align-items:center">
+          <div style="position:relative;aspect-ratio:3/2;width:100%"><image-slot id="b-client-{{ k.id }}" shape="rounded" radius="10" fit="contain" placeholder="Logo klijenta"></image-slot></div>
+          <span style="font:600 13px/1.3 'Onest',sans-serif;color:#4A5372">{{ k.name }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Kontakt" style="background:#1436A2;color:#FFFFFF;border-radius:0 0 clamp(28px,4vw,56px) clamp(28px,4vw,56px)">
+    <div class="b-contact-hero" style="max-width:1360px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(20px,4vw,48px) clamp(120px,12vw,180px)">
+      <p style="font:700 13px/1 'Onest',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#B9E57F;margin:0 0 16px">Kontakt · Zahtev za uzorak</p>
+      <h1 style="font:800 clamp(42px,6vw,92px)/.98 'Onest',sans-serif;letter-spacing:-.04em;margin:0;max-width:14ch;text-wrap:balance">Recite nam šta razvijate.</h1>
+    </div>
+  </section>
+  <section style="max-width:1360px;margin:calc(-1 * clamp(88px,9vw,140px)) auto 0;padding:0 clamp(20px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:16px;align-items:start;position:relative">
+    <div style="background:#FFFFFF;border-radius:32px;padding:clamp(24px,4vw,44px);box-shadow:0 20px 50px rgba(11,21,64,.12)">
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;padding:24px 0">
+          <span aria-hidden="true" style="width:56px;height:56px;border-radius:50%;background:#67B50A;display:grid;place-items:center;font:800 24px/1 'Onest',sans-serif;color:#0B1540">✓</span>
+          <h2 style="font:800 34px/1.05 'Onest',sans-serif;letter-spacing:-.03em;margin:0">Hvala, zahtev je poslat.</h2>
+          <p style="font:400 17px/1.6 'Onest',sans-serif;color:#4A5372;margin:0">Javićemo vam se na {{ form.email }} u najkraćem roku.</p>
+          <button onClick="{{ resetForm }}" style="min-height:48px;padding:0 22px;border:1.5px solid #0B1540;border-radius:14px;background:transparent;color:#0B1540;font:700 15px/1 'Onest',sans-serif;cursor:pointer">Novi zahtev</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:22px">
+          <fieldset style="border:0;margin:0;padding:0">
+            <legend style="font:700 14px/1 'Onest',sans-serif;margin-bottom:12px;padding:0">Tip zahteva</legend>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;background:#F3F5FA;border-radius:16px;padding:6px">
+              <sc-for list="{{ types }}" as="t" hint-placeholder-count="3">
+                <button type="button" aria-pressed="{{ t.pressed }}" onClick="{{ t.onClick }}" style="flex:1 1 auto;min-height:44px;padding:0 14px;border:0;border-radius:12px;background:{{ t.bg }};color:{{ t.fg }};font:600 14px/1 'Onest',sans-serif;cursor:pointer">{{ t.label }}</button>
+              </sc-for>
+            </div>
+          </fieldset>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:18px">
+            <label style="display:flex;flex-direction:column;gap:8px;font:700 14px/1 'Onest',sans-serif">Ime i prezime *
+              <input value="{{ form.name }}" onChange="{{ onName }}" autoComplete="name" style="box-sizing:border-box;width:100%;min-height:52px;padding:14px 16px;border:1.5px solid {{ nameBorder }};border-radius:14px;background:#F3F5FA;font:400 16px/1.4 'Onest',sans-serif;color:#0B1540" style-focus="outline:3px solid rgba(20,54,162,.2);border-color:#1436A2;background:#FFFFFF">
+              <sc-if value="{{ errName }}" hint-placeholder-val="{{ false }}"><span style="font:500 13px/1.3 'Onest',sans-serif;color:#B42318">Unesite ime i prezime.</span></sc-if>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:8px;font:700 14px/1 'Onest',sans-serif">Kompanija
+              <input value="{{ form.company }}" onChange="{{ onCompany }}" autoComplete="organization" style="box-sizing:border-box;width:100%;min-height:52px;padding:14px 16px;border:1.5px solid transparent;border-radius:14px;background:#F3F5FA;font:400 16px/1.4 'Onest',sans-serif;color:#0B1540" style-focus="outline:3px solid rgba(20,54,162,.2);border-color:#1436A2;background:#FFFFFF">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:8px;font:700 14px/1 'Onest',sans-serif">Email *
+              <input type="email" value="{{ form.email }}" onChange="{{ onEmail }}" autoComplete="email" style="box-sizing:border-box;width:100%;min-height:52px;padding:14px 16px;border:1.5px solid {{ emailBorder }};border-radius:14px;background:#F3F5FA;font:400 16px/1.4 'Onest',sans-serif;color:#0B1540" style-focus="outline:3px solid rgba(20,54,162,.2);border-color:#1436A2;background:#FFFFFF">
+              <sc-if value="{{ errEmail }}" hint-placeholder-val="{{ false }}"><span style="font:500 13px/1.3 'Onest',sans-serif;color:#B42318">Unesite ispravnu email adresu.</span></sc-if>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:8px;font:700 14px/1 'Onest',sans-serif">Telefon
+              <input type="tel" value="{{ form.phone }}" onChange="{{ onPhone }}" autoComplete="tel" style="box-sizing:border-box;width:100%;min-height:52px;padding:14px 16px;border:1.5px solid transparent;border-radius:14px;background:#F3F5FA;font:400 16px/1.4 'Onest',sans-serif;color:#0B1540" style-focus="outline:3px solid rgba(20,54,162,.2);border-color:#1436A2;background:#FFFFFF">
+            </label>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:8px;font:700 14px/1 'Onest',sans-serif">Kategorija proizvoda
+            <select value="{{ form.cat }}" onChange="{{ onCat }}" style="box-sizing:border-box;width:100%;min-height:52px;padding:14px 16px;border:1.5px solid transparent;border-radius:14px;background:#F3F5FA;font:400 16px/1.4 'Onest',sans-serif;color:#0B1540">
+              <option value="">Izaberite (opciono)</option>
+              <sc-for list="{{ catNames }}" as="n" hint-placeholder-count="3"><option value="{{ n }}">{{ n }}</option></sc-for>
+            </select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font:700 14px/1 'Onest',sans-serif">Poruka
+            <textarea value="{{ form.msg }}" onChange="{{ onMsg }}" rows="5" placeholder="Proizvod, primena, željena količina…" style="box-sizing:border-box;width:100%;padding:14px 16px;border:1.5px solid transparent;border-radius:14px;background:#F3F5FA;font:400 16px/1.5 'Onest',sans-serif;color:#0B1540;resize:vertical" style-focus="outline:3px solid rgba(20,54,162,.2);border-color:#1436A2;background:#FFFFFF"></textarea>
+          </label>
+          <button class="btn-full" type="button" onClick="{{ submit }}" style="min-height:56px;padding:0 28px;border:0;border-radius:14px;background:#1436A2;color:#FFFFFF;font:700 16px/1 'Onest',sans-serif;cursor:pointer;transition:background .2s" style-hover="background:#0B1540">Pošaljite zahtev →</button>
+        </div>
+      </sc-if>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="background:#FFFFFF;border-radius:32px;padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:18px;box-shadow:0 20px 50px rgba(11,21,64,.08)">
+        <sc-for list="{{ channels }}" as="h" hint-placeholder-count="3">
+          <a href="mailto:flavena.doo@gmail.com" style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:#F3F5FA;text-decoration:none;color:#0B1540;transition:background .2s" style-hover="background:#E7ECF8;color:#0B1540">
+            <span style="display:flex;flex-direction:column;gap:4px"><strong style="font:700 16px/1.2 'Onest',sans-serif">{{ h.t }}</strong><span style="font:400 14px/1.3 'Onest',sans-serif;color:#4A5372">{{ h.d }}</span></span>
+            <span aria-hidden="true" style="color:#1436A2;font:700 18px/1 'Onest',sans-serif">→</span>
+          </a>
+        </sc-for>
+        <div style="display:flex;flex-direction:column;gap:6px;font:400 16px/1.5 'Onest',sans-serif;padding:6px 4px 0">
+          <span>Jurija Gagarina 231, lokal 311, 11070 Novi Beograd</span>
+          <a href="tel:+38163431192" style="font-weight:700">063 431-192</a>
+          <a href="mailto:flavena.doo@gmail.com" style="font-weight:700">flavena.doo@gmail.com</a>
+        </div>
+      </div>
+      <div style="border-radius:32px;overflow:hidden;aspect-ratio:4/3;background:#E7ECF8">
+        <iframe title="Mapa: Jurija Gagarina 231, Novi Beograd" src="https://maps.google.com/maps?q=Jurija%20Gagarina%20231%2C%20Novi%20Beograd&amp;t=m&amp;z=15&amp;output=embed" loading="lazy" style="width:100%;height:100%;border:0;display:block"></iframe>
+      </div>
+    </div>
+  </section>
+</sc-if>
+
+<section data-screen-label="CTA" style="max-width:1360px;margin:clamp(72px,9vw,128px) auto 0;padding:0 clamp(20px,4vw,48px)">
+  <div data-reveal="" style="position:relative;overflow:hidden;background:#0B1540;color:#FFFFFF;border-radius:clamp(28px,4vw,48px);padding:clamp(32px,5vw,72px)">
+    <div class="b-cta-deco" style="position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:#67B50A"></div>
+    <div class="b-cta-deco" style="position:absolute;right:140px;bottom:-120px;width:220px;height:220px;border-radius:50%;background:#1436A2"></div>
+    <div style="position:relative;max-width:640px;display:flex;flex-direction:column;gap:22px">
+      <h2 style="font:800 clamp(32px,4.4vw,60px)/1 'Onest',sans-serif;letter-spacing:-.04em;margin:0;text-wrap:balance">Treba vam uzorak ili tehnološki savet?</h2>
+      <p style="font:400 18px/1.55 'Onest',sans-serif;color:#DCE3F7;margin:0">Naš tim odgovara na svako pitanje o aromama, od izbora do isporuke u vaš magacin.</p>
+      <div class="btn-row" style="display:flex;gap:12px;flex-wrap:wrap">
+        <button onClick="{{ goSample }}" style="min-height:54px;padding:0 26px;border:0;border-radius:14px;background:#67B50A;color:#0B1540;font:700 16px/1 'Onest',sans-serif;cursor:pointer;transition:background .2s" style-hover="background:#7FCB22">Zatražite uzorak</button>
+        <a href="tel:+38163431192" style="display:inline-flex;align-items:center;min-height:54px;padding:0 26px;border:1.5px solid rgba(255,255,255,.5);border-radius:14px;color:#FFFFFF;font:700 16px/1 'Onest',sans-serif;text-decoration:none;box-sizing:border-box">Pozovite 063 431-192</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer style="max-width:1360px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(20px,4vw,48px) 32px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:40px;padding-bottom:36px;border-bottom:1px solid rgba(11,21,64,.12)">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <img src="assets/flavena-logo.png" alt="Flavena Beograd" style="height:54px;width:auto;align-self:flex-start">
+      <p style="font:400 15px/1.5 'Onest',sans-serif;color:#4A5372;margin:0;max-width:30ch">Uvoz i distribucija aroma za prehrambenu industriju. Zvanični distributer Akras.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;font:400 15px/1.5 'Onest',sans-serif">
+      <strong style="font:700 13px/1 'Onest',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#4A5372;margin-bottom:6px">Kontakt</strong>
+      <span>Jurija Gagarina 231, lokal 311<br>11070 Novi Beograd</span>
+      <a href="tel:+38163431192">063 431-192</a>
+      <a href="mailto:flavena.doo@gmail.com">flavena.doo@gmail.com</a>
+    </div>
+    <div class="span-reset" style="grid-column:span 2;display:flex;flex-direction:column;gap:10px">
+      <strong style="font:700 13px/1 'Onest',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#4A5372;margin-bottom:6px">Proizvodi</strong>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:2px 24px">
+        <sc-for list="{{ allCats }}" as="c" hint-placeholder-count="13">
+          <button onClick="{{ c.onOpen }}" style="background:none;border:0;padding:6px 0;text-align:left;font:500 15px/1.35 'Onest',sans-serif;color:#0B1540;cursor:pointer" style-hover="color:#1436A2;text-decoration:underline">{{ c.name }}</button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:24px;font:400 13px/1.4 'Onest',sans-serif;color:#4A5372">
+    <span>© 2026 Flavena doo. Sva prava zadržana.</span>
+    <span>Beograd · Srbija</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;animacije&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prikaz&quot;},&quot;startPage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;naslovna&quot;,&quot;options&quot;:[&quot;naslovna&quot;,&quot;proizvodi&quot;,&quot;kategorija&quot;,&quot;o-nama&quot;,&quot;kontakt&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prikaz&quot;}}">
+const U='https://flavena.co.rs/wp-content/uploads/';
+const CATS=[
+{slug:'bezalkoholna',group:'pica',name:'Osvežavajuća bezalkoholna pića',kicker:'Gazirana i negazirana pića',img:U+'elementor/thumbs/montage_tetra_eistee-2@2x-pnmwksqxeobs3iquxqbwc6g8s6waj7lqhs5qnbppg8.jpg',short:'Emulzije za aromu i boju, aseptična jedinjenja, clean label',intro:'Sveobuhvatna rešenja ukusa za gazirana i negazirana pića: za proizvode sa sokom, sa malim udelom soka i bez soka.',sections:[{h:'Emulzije za aromu i boju',t:'Emulzije koje ispunjavaju najviše zahteve stabilnosti, roka trajanja i ukusa. Pored standardnih emulzija kole i narandže, širok izbor prirodno obojenih sastojaka, i za proizvodnju sirupa.'},{h:'Aseptično punjena jedinjenja',t:'Sastojci i baze sa smanjenim brojem klica za Clean i Ultra Clean punjenje: voćne, multivitaminske i pojedinačne mešavine za napitke sa do 35% soka.'},{h:'Clean label rešenja',t:'Formulacije sa kratkim i jednostavnim listama sastojaka, usklađene sa pakovanjem i zakonskim zahtevima, za zamućivanje i bojenje napitaka.'}]},
+{slug:'mineralne-vode',group:'pica',name:'Mineralne vode sa ukusom',kicker:'Aromatizovane i vitaminske vode',img:U+'2022/04/mineralne-vode.jpg',short:'Esencije i ekstrakti za vode sa ukusom i vitaminske vode',intro:'Osvežavajuća pića na bazi prirodne mineralne vode, za potrošače koji vode računa o zdravlju i žele hidrataciju sa ukusom.',sections:[{h:'Motor rasta',t:'Esencije, ekstrakti i arome koje napicima na bazi mineralne vode daju jedinstven, prilagođen ukus, uz savete o pakovanju i analizu neželjenih ukusa.'},{h:'Voda plus funkcija',t:'Posebni koncepti sa vitaminskim obogaćenjem i funkcionalnim sastojcima, poput vitaminskih voda na granici sa funkcionalnim napicima.'}]},
+{slug:'funkcionalna',group:'pica',name:'Funkcionalna pića',kicker:'Više od utoljivača žeđi',img:U+'2022/04/funcionalnapica02.jpg',short:'Botanički sastojci, supervoće, vitaminski napici',intro:'Koncepti za pića sa dodatnom vrednošću. Zajedno sa vama definišemo ciljnu grupu, njene potrebe i tehničku implementaciju.',sections:[{h:'Moderna revitalizacija',t:'Pored mikro i makronutrijenata, akcenat je na botaničkim sastojcima i supervoću.'},{h:'Vitamini i kontrola težine',t:'Obogaćeni napici u kombinaciji sa novim rešenjima pakovanja i punjenja, za savremene potrošače koji vode računa o zdravlju.'}]},
+{slug:'caj-wellness',group:'pica',name:'Čaj, wellness i biljni napici',kicker:'Ledeno osveženje',img:U+'2022/04/cajevi.jpg',short:'Ekstrakti čaja, biljne esencije, infuzije',intro:'Ledeni čajevi i moderne čajne inovacije: robustan ukus, prirodni sastojci i nizak sadržaj šećera.',sections:[{h:'Ekstrakti i esencije',t:'Pored ukusa, ključnu ulogu imaju dugotrajna stabilnost i rastvorljivost ekstrakta za ledene čajeve.'},{h:'Sveže kuvane infuzije',t:'Prirodne infuzije, destilati i frakcije čaja za aseptično i Ultra Clean flaširana pića, sa ukusom sveže skuvanog čaja.'},{h:'Širok čajni program',t:'Koncepti na bazi crnog, zelenog, belog, voćnog i biljnog čaja.'}]},
+{slug:'kafa',group:'pica',name:'Mešani napici od kafe',kicker:'Inovacije sa udarom',img:U+'2022/04/kafe.jpg',short:'Ledena, instant i aromatizovana kafa, veganski napici',intro:'Ledena kafa, instant kafa, kafa sa ukusom i gotovi veganski napici: globalni trend koji spaja praktičnost i funkcionalnost.',sections:[{h:'Širok spektar ukusa',t:'Arome za specifične primene, uz razumevanje lokalnih očekivanja potrošača.'},{h:'Pouzdanost u proizvodnji',t:'Proizvodi precizno prilagođeni mlečnim komponentama i procesnim parametrima, uz probne proizvodnje u tehničkom centru.'}]},
+{slug:'energetska',group:'pica',name:'Energetska pića',kicker:'Uzbudljiva i stimulativna',img:U+'2022/04/energetska-pica.jpg',short:'Sve-u-jednom jedinjenja, baze, vitaminsko-energetske mešavine',intro:'Više od 30 godina ekspertize proizvođača u segmentu energetskih pića: sve-u-jednom jedinjenja, sastojci, baze i vitaminsko-energetske mešavine.',sections:[{h:'Energija i sok',t:'Energetski sokovi, šotovi i organske alternative sa novim zaslađivačima za nove grupe kupaca.'},{h:'Odgovoran pristup',t:'Pravna i analitička ekspertiza za tržišta na kojima plasirate proizvod.'}]},
+{slug:'piva',group:'pica',name:'Mešovita piva i sladna pića',kicker:'Nove ciljne grupe',img:U+'2022/04/beer.jpg',short:'Sladne osnove, Radler, bezalkoholno pivo',intro:'Bezalkoholna sladna pića i mešana pivska pića, od prirodne mlečno-kiselinske fermentacije do Radlera.',sections:[{h:'Premium fermentisani ukusi',t:'Karakteristični ukusi i sladne osnove testirani u pivarama, kao i univerzalna jedinjenja za bezalkoholno pivo.'},{h:'Tradicija i moderno',t:'Specijalni sastojci citrusa i limuna za mešana pivska pića i pića tipa Radler.'}]},
+{slug:'slatkisi',group:'hrana',name:'Slatkiši i pekarstvo',kicker:'Visokotehnološki slatkiši',img:U+'2022/05/bakery.jpg',short:'Arome i sistemi isporuke za konditore i pekare',intro:'Arome i sistemi isporuke prilagođeni vašim pogonima i recepturama, uz tehnološki savet već u fazi razvoja.',sections:[{h:'Fleksibilna rešenja',t:'Ukus prilagođavamo nameravanoj upotrebi i specifičnim uslovima proizvodnje u konditorskom sektoru.'},{h:'Isporuka i oslobađanje ukusa',t:'Najviši zahtevi za rok trajanja i kontrolu razvoja ukusa u savremenim proizvodnim procesima.'}],listTitle:'Sistemi isporuke',list:['Tečne arome','Emulgovane arome']},
+{slug:'mlecni',group:'hrana',name:'Osvežavajući novi mlečni proizvodi',kicker:'Inovacije u mlečnom segmentu',img:U+'2022/05/mlecni-proizvodi.jpg',short:'Sladoled, jogurt, veganske i proteinske inovacije',intro:'Fokus na održivoj i veganskoj ishrani, užitku sa manje šećera i proizvodima sa visokim sadržajem proteina.',sections:[{h:'Stvaranje i primena',t:'Dugogodišnje iskustvo u ukusima za sladoled. Brzo rešavamo pitanja organoleptike, teksture, stabilizacije i emulzifikacije.'},{h:'Krem i voće',t:'Arome mleka i jogurta za proizvode na bazi krema i voća, prilagođene vašim procesima i recepturama.'}]},
+{slug:'zacini',group:'hrana',name:'Začinski proizvodi',kicker:'Grickalice i gotova jela',img:U+'2022/05/zacini01.jpg',short:'Kompletni sistemi ukusa za slano',intro:'Kompletan sistem ukusa za začinjene proizvode i grickalice, sa fokusom na dug rok trajanja i stabilnost intenzivnih ukusa.',sections:[{h:'Novi začin za vaš proizvod',t:'Tečne i inkapsulirane zamene masti, poput prirodnog putera i margarina, i arome za kečap i majonez.'}],listTitle:'Sektori primene',list:['Začini za grickalice','Industrija mesa i kobasica','Gotova jela','Sosovi i dipovi','Supe','Konzervirani proizvodi','Majonez i kečap','Margarini','Mešavine začina']},
+{slug:'akrarom',group:'sirovine',name:'Akrarom voćni praškovi',kicker:'Prirodno voće u prahu',img:U+'2022/05/akrarom-vocni-praskovi.jpg',short:'Čist voćni prah, bez konzervansa i aditiva',intro:'Čisto prirodan voćni prah: odabrani sokovi i koncentrati sušeni raspršivanjem ili u fluidizovanom sloju. Slobodno teče i ima dug rok trajanja.',chips:['Bez konzervansa','Organski','Košer','Hrana za bebe'],sections:[{h:'Očuvana prirodnost',t:'Nežna prerada čuva karakterističnu boju i ukus voća. Bez konzervansa i drugih aditiva.'},{h:'Bebi, organski, košer',t:'Dostupno i za hranu za bebe, kao i u sertifikovanom organskom i košer kvalitetu.'}],listTitle:'Područja primene',list:['Instant napici','Arome za pečenje','Suvi deserti','Musli barovi','Voćna punjenja','Čokoladni proizvodi','Krem punjenja','Voćni namazi','Slatkiši']},
+{slug:'caj',group:'sirovine',name:'Čaj',kicker:'Arome za čaj',img:U+'2022/05/tee03.jpg',short:'Arome za biljne i klasične čajeve',intro:'Savršena interakcija čaja i ukusa u trenutku uživanja, za biljne čajeve i čaj od rastresitog lista.',sections:[{h:'Pravovremeno oslobađanje ukusa',t:'Visokotehnološke metode analize i pažljivo upravljanje nabavkom sirovina.'},{h:'Poznavanje sorti',t:'Istraživanja faza fermentacije belog i crnog čaja i geografskih specifičnosti svake sorte.'}]},
+{slug:'vanila',group:'sirovine',name:'Vanila',kicker:'Kraljica začina',img:U+'2022/05/vanila.jpg',short:'Prirodne arome, ekstrakti i preparati vanile',intro:'Vanilin, ključna aromatična komponenta vanile, najvažnija je aroma na svetu, barem po količini. Mahune pretežno potiču sa Madagaskara i Reuniona.',chips:['Madagaskar','Reunion','Burbon vanila','Održiva nabavka'],sections:[{h:'Poreklo je odlučujuće',t:'Pored Madagaskara i Reuniona, odobreni izvori su i Indonezija, Afrika i Meksiko. Radimo isključivo sa odabranim ugovornim partnerima i održivom nabavkom.'},{h:'Bez kompromisa u kvalitetu',t:'Posebne metode analize čistoće i sopstveni postupak ekstrakcije za optimalan rezultat ukusa.'},{h:'Međunarodni ukus',t:'Proizvodi od vanile po meri, prilagođeni različitim preferencijama ukusa.'}],listTitle:'Asortiman vanile',list:['Prirodne arome vanile','Ekstrakti vanile','Ekstrakti sušeni sprejom','Preparati od vanile','Arome burbon vanile']}
+];
+const G={pica:'Pića',hrana:'Hrana',sirovine:'Sirovine'};
+const STEPS=[{title:'Konsalting',text:'Stručan tim pomaže u izboru arome i odgovara na svako tehničko pitanje.'},{title:'Nabavka i uvoz',text:'Na vaš zahtev nabavljamo i uvozimo arome iz celokupne palete Akras.'},{title:'Skladištenje',text:'Deo asortimana je stalno na lageru; uvezenu robu čuvamo do isporuke.'},{title:'Isporuka',text:'Transport robe direktno do magacina kupca, brzo i pouzdano.'}];
+const CLIENTS=['Benni plus, Niš','Bahus (NaEks)','Takovo','Stork','Swisslion','Vitamin Horgoš'];
+const CERTS=[['ISO 22000','Bezbednost hrane','2022/04/ISO_22000_single-150x150.jpg'],['IFS Food','Standard kvaliteta hrane','2022/04/IFS-Food.jpg'],['ISO 14001','Životna sredina','2022/04/ISO_14001_farbe_single-150x150-1.jpg'],['FAMI-QS','Aditivi za hranu za životinje','2022/04/FAMIQS.jpg'],['ABG','Organski kvalitet','2022/04/ABG_logo.jpg'],['Halal','Halal sertifikat','2022/04/Halal.jpg'],['Kosher OK','Košer sertifikat','2022/04/Kosher_OK-gold-CMYK-600dpi.jpg']];
+const EMPTY={type:'uzorak',name:'',company:'',email:'',phone:'',cat:'',msg:''};
+const EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+class Component extends DCLogic {
+  state={page:(this.props&&this.props.startPage)||'naslovna',cat:'vanila',filter:'sve',form:{...EMPTY},tried:false,sent:false,menu:false};
+  go(page,extra){this.setState({page,menu:false,...(extra||{})});try{window.scrollTo({top:0,behavior:'auto'});}catch(e){}}
+  open(slug){this.go('kategorija',{cat:slug});}
+  setField(k,v){this.setState(s=>({form:{...s.form,[k]:v}}));}
+  componentDidMount(){this.reveal();}
+  componentDidUpdate(pp,ps){
+    if(pp.startPage!==this.props.startPage&&this.props.startPage)this.go(this.props.startPage);
+    if(ps.page!==this.state.page||ps.cat!==this.state.cat||ps.filter!==this.state.filter)this.reveal();
+  }
+  componentWillUnmount(){if(this.io)this.io.disconnect();}
+  reveal(){
+    if((this.props.animacije??true)===false)return;
+    if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    requestAnimationFrame(()=>{
+      if(!this.io)this.io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='none';this.io.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+      document.querySelectorAll('[data-reveal]:not([data-rv])').forEach((el,i)=>{
+        el.setAttribute('data-rv','1');
+        if(el.getBoundingClientRect().top<innerHeight*.95)return;
+        el.style.opacity='0';el.style.transform='translateY(24px) scale(.985)';
+        el.style.transition='opacity .7s cubic-bezier(.2,.7,.2,1) '+((i%4)*60)+'ms, transform .7s cubic-bezier(.2,.7,.2,1) '+((i%4)*60)+'ms';
+        this.io.observe(el);
+      });
+    });
+  }
+  renderVals(){
+    const s=this.state;
+    const mk=c=>({...c,num:String(CATS.indexOf(c)+1).padStart(2,'0'),groupLabel:G[c.group],onOpen:()=>this.open(c.slug),chips:c.chips||(c.list||[]).slice(0,4)});
+    const list=CATS.filter(c=>s.filter==='sve'||c.group===s.filter).map(mk);
+    const mkF=(on,onFg,off)=>[['sve','Sve'],['pica','Pića'],['hrana','Hrana'],['sirovine','Sirovine']].map(([id,l])=>({label:l,count:id==='sve'?CATS.length:CATS.filter(c=>c.group===id).length,onClick:()=>this.setState({filter:id}),bg:s.filter===id?on:'transparent',fg:s.filter===id?onFg:off}));
+    const c=CATS.find(x=>x.slug===s.cat)||CATS[12];
+    const cur={...mk(c),sections:c.sections.map((x,i)=>({...x,num:String(i+1).padStart(2,'0')})),hasList:!!(c.list&&c.list.length),list:c.list||[],listTitle:c.listTitle||'Primene'};
+    const f=s.form;
+    const errName=s.tried&&!f.name.trim();
+    const errEmail=s.tried&&!EMAIL.test(f.email.trim());
+    const toContact=(type,cat)=>()=>this.go('kontakt',{sent:false,tried:false,form:{...this.state.form,type,cat:cat??this.state.form.cat}});
+    return {
+      menuOpen:s.menu,menuExpanded:String(s.menu),toggleMenu:()=>this.setState({menu:!this.state.menu}),menuLabel:s.menu?'Zatvori':'Meni',
+      burgerBg:s.menu?'#1436A2':'#E7ECF8',burgerFg:s.menu?'#FFFFFF':'#0B1540',bar1:s.menu?'translateY(5px) rotate(45deg)':'none',bar2:s.menu?'0':'1',bar3:s.menu?'translateY(-5px) rotate(-45deg)':'none',
+      isHome:s.page==='naslovna',isProducts:s.page==='proizvodi',isCat:s.page==='kategorija',isAbout:s.page==='o-nama',isContact:s.page==='kontakt',
+      goHome:()=>this.go('naslovna'),goProducts:()=>this.go('proizvodi'),goAbout:()=>this.go('o-nama'),goContact:toContact('uzorak'),
+      goSample:toContact('uzorak'),goMeeting:toContact('sastanak'),goSampleCat:toContact('uzorak',c.name),
+      filters:mkF('#1436A2','#FFFFFF','#0B1540'),filtersDark:mkF('#67B50A','#0B1540','#FFFFFF'),list,
+      steps:STEPS.map((x,i)=>({...x,num:String(i+1).padStart(2,'0')})),
+      spotlight:[mk(CATS[12]),mk(CATS[10])],
+      clients:CLIENTS.map((name,i)=>({name,id:i+1})),
+      certs:CERTS.map(([n,d,img])=>({n,d,img:U+img})),
+      cur,related:CATS.filter(x=>x.group===c.group&&x!==c).slice(0,3).map(mk),
+      allCats:CATS.map(mk),catNames:CATS.map(x=>x.name),
+      form:f,sent:s.sent,notSent:!s.sent,errName,errEmail,
+      nameBorder:errName?'#B42318':'transparent',emailBorder:errEmail?'#B42318':'transparent',
+      types:[['uzorak','Uzorak / ponuda'],['sastanak','Sastanak'],['ostalo','Ostalo']].map(([id,label])=>({label,pressed:String(f.type===id),onClick:()=>this.setField('type',id),bg:f.type===id?'#1436A2':'transparent',fg:f.type===id?'#FFFFFF':'#0B1540'})),
+      channels:[{t:'Korisnički servis',d:'Zahtevi za proizvode'},{t:'Servisni tim',d:'Ostali zahtevi'},{t:'Sastanimo se',d:'Zakažite sastanak'}],
+      onName:e=>this.setField('name',e.target.value),onCompany:e=>this.setField('company',e.target.value),onEmail:e=>this.setField('email',e.target.value),onPhone:e=>this.setField('phone',e.target.value),onCat:e=>this.setField('cat',e.target.value),onMsg:e=>this.setField('msg',e.target.value),
+      submit:()=>{if(f.name.trim()&&EMAIL.test(f.email.trim()))this.setState({sent:true,tried:false});else this.setState({tried:true});},
+      resetForm:()=>this.setState({sent:false,tried:false,form:{...EMPTY}})
+    };
+  }
+}
+</script>
+</body>
+</html>
